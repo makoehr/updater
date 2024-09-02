@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * @copyright Copyright (c) 2016 Lukas Reschke <lukas@statuscode.ch>
  * @copyright Copyright (c) 2016 Morris Jobke <hey@morrisjobke.de>
@@ -24,13 +27,19 @@ namespace NC\Updater;
 
 class RecursiveDirectoryIteratorWithoutData extends \RecursiveFilterIterator {
 	public function accept(): bool {
-		/** @var \DirectoryIterator $this */
 		$excludes = [
 			'.rnd',
 			'.well-known',
 			'data',
 			'..',
 		];
-		return !(in_array($this->current()->getFilename(), $excludes, true) || $this->current()->isDir());
+
+		/** @var \SplFileInfo|false */
+		$current = $this->current();
+		if (!$current) {
+			return false;
+		}
+
+		return !(in_array($current->getFilename(), $excludes, true) || $current->isDir());
 	}
 }
