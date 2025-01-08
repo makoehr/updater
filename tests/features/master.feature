@@ -1,3 +1,5 @@
+# SPDX-FileCopyrightText: 2016 Nextcloud GmbH and Nextcloud contributors
+# SPDX-License-Identifier: AGPL-3.0-or-later
 Feature: CLI updater - master base
 
   Scenario: Update is available - master to master daily
@@ -7,6 +9,6 @@ Feature: CLI updater - master base
     And the version number is decreased in the config.php to enforce upgrade
     When the CLI updater is run successfully
     And the output should contain "Update successful"
-    Then the installed version should be 30.0
+    Then the installed version should be 31.0
     And maintenance mode should be off
     And upgrade is not required
